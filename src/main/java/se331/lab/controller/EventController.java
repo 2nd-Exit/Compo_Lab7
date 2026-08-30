@@ -1,5 +1,6 @@
 package se331.lab.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,13 +101,16 @@ public class EventController {
         page = page == null?1:page;
         Integer firstIndex = (page-1) * perPage;
         List<Event> output = new ArrayList<>();
+
+        HttpHeaders responseHeader = new HttpHeaders();
+        responseHeader.set("x-total-count", String.valueOf(eventList.size()));
         try {
             for (int i = firstIndex; i < firstIndex + perPage; i++){
                 output.add(eventList.get(i));
             }
-            return ResponseEntity.ok(output);
+            return ResponseEntity.ok().headers(responseHeader).body(output);
         } catch (IndexOutOfBoundsException ex){
-            return ResponseEntity.ok(output);
+            return ResponseEntity.ok().headers(responseHeader).body(output);
         }
     }
     @GetMapping("events/{id}")
