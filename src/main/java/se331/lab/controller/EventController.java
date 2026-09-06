@@ -43,4 +43,10 @@ public class EventController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
     }
+
+    @PostMapping("/events")
+    public ResponseEntity<?> addEvent(@RequestBody Event event) {
+        Event output = eventService.save(event);
+        return ResponseEntity.ok(output);
+    }
 }
