@@ -1,6 +1,7 @@
 package se331.lab.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +18,18 @@ public class OrganizerController {
     final OrganizerService organizerService;
 
     @GetMapping("/organizers")
-    public ResponseEntity<?> getOrganizers(@RequestParam(value = "_limit", required = false) Integer perPage,
-                                           @RequestParam(value = "_page", required = false) Integer page) {
-        Integer orgSize = organizerService.getOrganizerSize();
-        HttpHeaders responseHeader = new HttpHeaders();
-        responseHeader.set("x-total-count", String.valueOf(orgSize));
+    public ResponseEntity<?> getOrganizers(
+            @RequestParam(value = "_limit", required = false) Integer perPage,
+            @RequestParam(value = "_page", required = false) Integer page) {
+
+        Page<Organizer> pageOutput = organizerService.getOrganizers(perPage, page);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
 
         try {
-            List<Organizer> output = organizerService.getOrganizers(perPage, page);
-            return new ResponseEntity<>(output, responseHeader, HttpStatus.OK);
-        } catch (IndexOutOfBoundsException ex) {
-            return new ResponseEntity<>(null, responseHeader, HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok().headers(responseHeaders).body(pageOutput.getContent());
+        } catch (IndexOutOfBoundsException e) {
+            return ResponseEntity.ok().headers(responseHeaders).body(pageOutput.getContent());
         }
     }
 
@@ -39,5 +41,11 @@ public class OrganizerController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
+    }
+
+    @PostMapping("/organizers")
+    public ResponseEntity<?> addOrganizer(@RequestBody Organizer organizer) {
+        Organizer output = organizerService.save(organizer);
+        return ResponseEntity.ok(output);
     }
 }
