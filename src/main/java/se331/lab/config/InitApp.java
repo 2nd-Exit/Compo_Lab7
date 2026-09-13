@@ -7,22 +7,30 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import se331.lab.entity.Event;
 import se331.lab.entity.Organizer;
+import se331.lab.entity.Participant;
 import se331.lab.repository.EventRepository;
 import se331.lab.repository.OrganizerRepository;
+import se331.lab.repository.ParticipantRepository;
 
 @Component
 @RequiredArgsConstructor
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     final EventRepository eventRepository;
     final OrganizerRepository organizerRepository;
+    final ParticipantRepository participantRepository;
 
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        Organizer org1, org2, org3;
-        org1 = organizerRepository.save(Organizer.builder().name("CAMT").build());
-        org2 = organizerRepository.save(Organizer.builder().name("CMU").build());
-        org3 = organizerRepository.save(Organizer.builder().name("ChiangMai").build());
+        Participant p1 = participantRepository.save(Participant.builder().name("Rapeepat").telNo("081111111").build());
+        Participant p2 = participantRepository.save(Participant.builder().name("Cheevanon").telNo("082222222").build());
+        Participant p3 = participantRepository.save(Participant.builder().name("Donlachok").telNo("083333333").build());
+        Participant p4 = participantRepository.save(Participant.builder().name("Nipitpon").telNo("084444444").build());
+        Participant p5 = participantRepository.save(Participant.builder().name("Chanin").telNo("085555555").build());
+
+        Organizer org1 = organizerRepository.save(Organizer.builder().name("CAMT").build());
+        Organizer org2 = organizerRepository.save(Organizer.builder().name("CMU").build());
+        Organizer org3 = organizerRepository.save(Organizer.builder().name("ChiangMai").build());
 
         Event tempEvent;
 
@@ -37,6 +45,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .build());
         tempEvent.setOrganizer(org1);
         org1.getOwnEvents().add(tempEvent);
+        tempEvent.getParticipants().add(p1); p1.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p2); p2.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p3); p3.getEventHistories().add(tempEvent);
 
         tempEvent = eventRepository.save(Event.builder()
                 .category("Academic")
@@ -49,6 +60,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .build());
         tempEvent.setOrganizer(org2);
         org2.getOwnEvents().add(tempEvent);
+        tempEvent.getParticipants().add(p1); p1.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p2); p2.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p4); p4.getEventHistories().add(tempEvent);
 
         tempEvent = eventRepository.save(Event.builder()
                 .category("Cultural")
@@ -61,6 +75,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .build());
         tempEvent.setOrganizer(org3);
         org3.getOwnEvents().add(tempEvent);
+        tempEvent.getParticipants().add(p1); p1.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p3); p3.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p5); p5.getEventHistories().add(tempEvent);
 
         tempEvent = eventRepository.save(Event.builder()
                 .category("Cultural")
@@ -73,5 +90,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .build());
         tempEvent.setOrganizer(org3);
         org3.getOwnEvents().add(tempEvent);
+        tempEvent.getParticipants().add(p2); p2.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p3); p3.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p4); p4.getEventHistories().add(tempEvent);
+        tempEvent.getParticipants().add(p5); p5.getEventHistories().add(tempEvent);
     }
 }

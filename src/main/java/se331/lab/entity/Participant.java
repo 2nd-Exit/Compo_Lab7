@@ -2,6 +2,8 @@ package se331.lab.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,6 +18,7 @@ public class Participant {
     Long id;
     String name;
     String telNo;
-    @ManyToMany
-    List<Event> eventHistories;
+    @ManyToMany(mappedBy = "participants")
+    @Builder.Default
+    List<Event> eventHistories = new ArrayList<>();
 }
