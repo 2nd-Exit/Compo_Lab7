@@ -3,7 +3,7 @@ package se331.lab.dao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import se331.lab.entity.Organizer;
 import se331.lab.repository.OrganizerRepository;
@@ -15,22 +15,8 @@ public class OrganizerDaoDbImpl implements OrganizerDao {
     final OrganizerRepository organizerRepository;
 
     @Override
-    public Integer getOrganizerSize() {
-        return Math.toIntExact(organizerRepository.count());
-    }
-
-    @Override
-    public Page<Organizer> getOrganizers(Integer pageSize, Integer page) {
-        long total = organizerRepository.count();
-        pageSize = pageSize == null ? (int) total : pageSize;
-        if (pageSize == 0) pageSize = 1; // กันบั๊กเวลาตารางโล่ง
-        page = page == null ? 1 : page;
-        return organizerRepository.findAll(PageRequest.of(page - 1, pageSize));
-    }
-
-    @Override
-    public Organizer getOrganizer(Long id) {
-        return organizerRepository.findById(id).orElse(null);
+    public Page<Organizer> getOrganizer(Pageable pageRequest) {
+        return organizerRepository.findAll(pageRequest);
     }
 
     @Override
