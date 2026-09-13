@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se331.lab.entity.Organizer;
 import se331.lab.service.OrganizerService;
+import se331.lab.util.LabMapper;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,12 +15,12 @@ public class OrganizerController {
 
     @GetMapping("/organizers")
     public ResponseEntity<?> getOrganizers() {
-        return ResponseEntity.ok(organizerService.getAllOrganizer());
+        return ResponseEntity.ok(LabMapper.INSTANCE.getOrganizerDTO(organizerService.getAllOrganizer()));
     }
 
     @PostMapping("/organizers")
     public ResponseEntity<?> addOrganizer(@RequestBody Organizer organizer) {
         Organizer output = organizerService.save(organizer);
-        return ResponseEntity.ok(output);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getOrganizerDTO(output));
     }
 }
