@@ -32,9 +32,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date("3rd Sept")
                 .time("3.00-4.00 pm.")
                 .petsAllowed(false)
-                .organizer(org1)
                 .build());
-        org1.getOwnEvents().add(tempEvent); // ผูกกลับให้ Organizer รู้จัก Event
+        tempEvent.setOrganizer(org1);
+        org1.getOwnEvents().add(tempEvent);
 
         tempEvent = eventRepository.save(Event.builder()
                 .category("Academic")
@@ -44,8 +44,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date("21th Jan")
                 .time("8.00am-4.00 pm.")
                 .petsAllowed(false)
-                .organizer(org2)
                 .build());
+        tempEvent.setOrganizer(org2);
         org2.getOwnEvents().add(tempEvent);
 
         tempEvent = eventRepository.save(Event.builder()
@@ -56,8 +56,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date("21th Nov")
                 .time("8.00-10.00 pm.")
                 .petsAllowed(false)
-                .organizer(org3)
                 .build());
+        tempEvent.setOrganizer(org3);
         org3.getOwnEvents().add(tempEvent);
 
         tempEvent = eventRepository.save(Event.builder()
@@ -68,8 +68,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date("13th April")
                 .time("10.00am - 6.00 pm.")
                 .petsAllowed(true)
-                .organizer(org3)
                 .build());
+        tempEvent.setOrganizer(org3);
         org3.getOwnEvents().add(tempEvent);
     }
 }
