@@ -1,0 +1,8 @@
+supabase:
+  storage:
+    endpoint: https://lbclyrntrhfntckpalkd.storage.supabase.co/storage/v1/s3
+    bucket: test
+    region: ap-southeast-2
+    accessKey: 0210f00d7c06984367c8ca601e7a4e02
+    secretKey: 00eb17c92edc6b0fc344f88dd56bd19a0af18025e42ed46d58e22c84e419a971
+    endpoint_output: ""
