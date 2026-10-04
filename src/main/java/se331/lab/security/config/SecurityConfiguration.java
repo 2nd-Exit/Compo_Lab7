@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -32,6 +33,9 @@ public class SecurityConfiguration {
             // block unauthorize
             .authorizeHttpRequests((auth) -> auth
                     .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/events").permitAll()        // 7.1
+                    .requestMatchers(HttpMethod.GET, "/organizers").permitAll()    // 7.2
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated()
             )
 
