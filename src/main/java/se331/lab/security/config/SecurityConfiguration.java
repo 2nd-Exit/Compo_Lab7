@@ -30,6 +30,7 @@ public class SecurityConfiguration {
 
             // block unauthorize
             .authorizeHttpRequests((auth) -> auth
+                    .requestMatchers("/api/v1/auth/**").permitAll()
                     .anyRequest().authenticated()
             )
 
