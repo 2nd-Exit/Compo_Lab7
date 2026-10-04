@@ -26,6 +26,7 @@ public class SecurityConfiguration {
       headers.frameOptions((frameOptions) -> frameOptions.disable());
     });
     http
+            .cors(org.springframework.security.config.Customizer.withDefaults())
             .csrf((crsf) -> crsf.disable())
 
             // block unauthorize
