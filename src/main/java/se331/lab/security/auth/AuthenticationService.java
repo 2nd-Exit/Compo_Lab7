@@ -21,6 +21,7 @@ import se331.lab.security.user.UserRepository;
 
 import java.io.IOException;
 import java.util.List;
+import se331.lab.util.LabMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -47,9 +48,10 @@ public class AuthenticationService {
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
-        .accessToken(jwtToken)
+            .accessToken(jwtToken)
             .refreshToken(refreshToken)
-        .build();
+            .user(LabMapper.INSTANCE.getOrganizerDTO(user.getOrganizer()))
+            .build();
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -69,6 +71,7 @@ public class AuthenticationService {
     return AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .user(LabMapper.INSTANCE.getOrganizerDTO(user.getOrganizer()))
             .build();
   }
 
