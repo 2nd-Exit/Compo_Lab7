@@ -28,6 +28,10 @@ public class SecurityConfiguration {
     http
             .csrf((crsf) -> crsf.disable())
 
+            // block unauthorize
+            .authorizeHttpRequests((auth) -> auth
+                    .anyRequest().authenticated()
+            )
 
             .sessionManagement((session) ->{
               session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

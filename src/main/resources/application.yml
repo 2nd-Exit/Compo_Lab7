@@ -5,6 +5,12 @@ spring:
       - local
   application:
     name: 331-backend
+    security:
+      jwt:
+        secret-key: 0299f5a804631312e19bfde33574b7cf3053f6b6115342afc1513bda037c453633ec3b4a67b7e901448c55fab244a381330f0df9fe9ac8d3588a3b7faefb1275
+        expiration: 86400000
+        refresh-token:
+          expiration: 604800000
   mvc:
     problemdetails:
       enabled: true

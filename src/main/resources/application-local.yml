@@ -6,3 +6,10 @@ supabase:
     accessKey: 0210f00d7c06984367c8ca601e7a4e02
     secretKey: 00eb17c92edc6b0fc344f88dd56bd19a0af18025e42ed46d58e22c84e419a971
     endpoint_output: ""
+application:
+  security:
+    jwt:
+      secret-key: 0299f5a804631312e19bfde33574b7cf3053f6b6115342afc1513bda037c453633ec3b4a67b7e901448c55fab244a381330f0df9fe9ac8d3588a3b7faefb1275
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
